@@ -2,3 +2,40 @@
 body {max-width: 720px; margin: 2rem auto; padding: 0 1rem;}
 form {display: flex; gap: 0.5rem; margin-bottom: 1rem 0;}
 #results {margin-top: 1rem;}
+
+.card {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(0,0,0,.06);
+}
+
+.card header {
+    margin-bottom: .5rem;
+}
+
+.card .row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.card .temp .big {
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.card img { 
+    vertical-align: middle;
+}
+
+.card .meta {
+    list-style: none; 
+    padding: 0;
+    margin: 0;
+}
+
+.card .meta li + li {
+    margin-top: .25rem;
+}

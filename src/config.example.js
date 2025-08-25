@@ -1,1 +1,1 @@
-const OWM_API_KEY = 'your_openweather_api_key';
+const OWM_API_KEY = '952114d90c279650da2ad6d96ad9e60f';

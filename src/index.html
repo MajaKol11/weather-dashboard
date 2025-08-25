@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Weather Dashboard</title>
+        <link rel="stylesheet" href="./styles.css" />
+    </head>
+    <body>
+        <!-- Header Section -->
+        <header><h1>Weather Dashboard</h1></header>
+
+        <!-- Search Form -->
+        <form id="search-form">
+            <input id="q" placeholder="City or City,CountryCode (e.g. London,UK)" />
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Results Section -->
+        <div id="results" aria-live="polite"></div>
+
+        <script src="./config.example.js"></script>
+        <script src="./app.js" defer></script>
+    </body>
+</html>

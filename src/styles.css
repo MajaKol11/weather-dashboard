@@ -1,0 +1,4 @@
+:root {font-family: system-ui, Arial, sans-serif;}
+body {max-width: 720px; margin: 2rem auto; padding: 0 1rem;}
+form {display: flex; gap: 0.5rem; margin-bottom: 1rem 0;}
+#results {margin-top: 1rem;}

@@ -10,6 +10,11 @@ const form = document.getElementById("search-form");
 const input = document.getElementById("q");
 const results = document.getElementById("results");
 
+try {
+    const last = localStorage.getItem("lastQuery");
+    if (last) q = last;
+} catch {}
+
 //Small helpers (rendering stubs)
 function setStatus(msg) { results.innerHTML = `<p>${msg}</p>`; }
 function clearResults() { results.innerHTML = ""; }
@@ -46,9 +51,10 @@ form.addEventListener("submit", async (e) => {
         const q = (input.value || "").trim(); //Input is trimmed, leading/trailing spaces are removed. (" New York,US " => "New York,US")
         const normalized = q
             .replace(/\s*,\s*/g, ",") //Removes spaces around commas ("New York , US" => "New York,US")
-            .replace(/\s+/g, ""); //Removes unnecessary spaces ("New  York,US" => "New York,US")
+            .replace(/\s+/g, " "); //Removes unnecessary spaces ("New  York,US" => "New York,US")
 
         if (normalized !== q) input.value = normalized; //If the normalized value is different from the original, update the input.
+       
    
         console.log("[submit] q =", q);
 
@@ -70,6 +76,7 @@ form.addEventListener("submit", async (e) => {
             console.log("[weather] data =", weather);
             setStatus("Weather data fetched. Rendering…");
             renderWeatherCard(place, weather);
+            try { localStorage.setItem("lastQuery", q); } catch {}
         } 
         catch (err) {
             console.error("[error] ", err);
@@ -125,7 +132,7 @@ form.addEventListener("submit", async (e) => {
                 <div class="row">
                     <div class="tempt">
                         <div class="big">${weather.tempC}&deg;C</div>
-                        ${iconURL ? `<img src="${iconURL}}" alt="Icon: ${weather.desc}"` : ""}
+                        ${iconURL ? `<img src="${iconURL}" alt="Icon: ${weather.desc}" />` : ""}
                         </div>
                         <ul class="meta">
                             <li><strong>Humidity:</strong> ${weather.humidity}%</li>
@@ -136,4 +143,5 @@ form.addEventListener("submit", async (e) => {
             </article>
         `;
     }
+
 //});

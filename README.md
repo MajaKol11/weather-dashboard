@@ -1,0 +1,1 @@
+MVP: Search by city and display current weather using OpenWeather APIs.

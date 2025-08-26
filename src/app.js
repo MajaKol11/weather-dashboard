@@ -43,8 +43,15 @@ form.addEventListener("submit", async (e) => {
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const q = (input.value || "").trim();
+        const q = (input.value || "").trim(); //Input is trimmed, leading/trailing spaces are removed. (" New York,US " => "New York,US")
+        const normalized = q
+            .replace(/\s*,\s*/g, ",") //Removes spaces around commas ("New York , US" => "New York,US")
+            .replace(/\s+/g, ""); //Removes unnecessary spaces ("New  York,US" => "New York,US")
+
+        if (normalized !== q) input.value = normalized; //If the normalized value is different from the original, update the input.
+   
         console.log("[submit] q =", q);
+
         if (!q) {
             setStatus("Please enter a city (e.g., London or London,UK)");
             return;

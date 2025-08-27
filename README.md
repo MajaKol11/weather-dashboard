@@ -14,6 +14,18 @@ Search a city and view current weather (°C, description + icon, humidity, wind)
 - OpenWeather Geocoding + Current Weather APIs
 - No build tools required
 
+## Project Structure
+```bash
+/assets/                 
+└── /src/
+    ├── index.html
+    ├── styles.css
+    ├── app.js
+    └── config.example.js   
+.gitignore
+README.md
+```
+
 ## Prerequisites
 - A free OpenWeather API key
 - VS Code with Live Server extension (Ritwick Dey), or Python for a simple local server
@@ -30,7 +42,7 @@ Search a city and view current weather (°C, description + icon, humidity, wind)
    - d. Keep `src/config.js` out of Git (already in `.gitignore`)
 3. Run locally  
    - a. With Live Server  
-     In VS Code, right-click `src/index.html` → **Open with Live Server** (extension required)  
+      - In VS Code, right-click `src/index.html` → **Open with Live Server** (extension required)  
    - b. With Python
      ```bash
      cd src
@@ -44,7 +56,7 @@ Search a city and view current weather (°C, description + icon, humidity, wind)
 3. Click **Search**.  
 4. The app shows:
    - City, Country, and State if present
-   - Temperature, Description, and Icon
+   - Temperature (°C and F), Description, and Icon
    - Humidity (%), wind (m/s)
 
 Last successful search is prefilled on reload.

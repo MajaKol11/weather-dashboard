@@ -33,21 +33,22 @@ README.md
 ## Setup
 1. Clone and open repo in VS Code
 2. Create local config (ignored by Git)  
-   a. Copy `src/config.example.js`  
-   b. Create `config.js` in the `src` folder  
-   c. Paste your key (you can get one free from openweathermap.org):  
-      `const OWM_API_KEY = "YOUR_KEY";`  
-   d. Keep `src/config.js` out of Git (already in `.gitignore`)
+   - a. Copy `src/config.example.js`  
+   - b. Create `config.js` in the `src` folder  
+   - c. Paste your key (you can get one free from openweathermap.org):  
+     ```js
+     const OWM_API_KEY = "YOUR_KEY";
+     ```
+   - d. Keep `src/config.js` out of Git (already in `.gitignore`)
 3. Run locally  
-   a. With Live Server<br />
-      In VS Code, right-click `src/index.html` → **Open with Live Server** (extension required)  
-   b. With Python
-      ```bash
-      cd src
-      python -m http.server 5500
-      ```
-      Visit `http://localhost:5500`.
-
+   - a. With Live Server  
+     &nbsp;&nbsp;&nbsp;&nbsp;In VS Code, right-click `src/index.html` → **Open with Live Server** (extension required)  
+   - b. With Python
+     ```bash
+     cd src
+     python -m http.server 5500
+     ```
+     Visit `http://localhost:5500`.
 
 ## Usage
 1. Type a city (`London`) or `City,CountryCode` (`London,GB`) into the input field.  

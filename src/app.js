@@ -1,7 +1,6 @@
 console.clear();
 console.log("[boot] app.js loaded", new Date().toISOString());
 
-function setStatus(msg)   { results.innerHTML = `<p>${msg}</p>`; }
 function showLoading(msg = "Loading…") { results.innerHTML = `<p role="status">${msg}</p>`; }
 function showError(msg)   { results.innerHTML = `<p role="alert">${msg}</p>`; }
 
@@ -12,7 +11,14 @@ const results = document.getElementById("results");
 
 try {
     const last = localStorage.getItem("lastQuery");
-    if (last) q = last;
+    if (last && last !== "[object HTMLInputElement]") 
+    {
+        input.value = last;
+    } 
+    else 
+    {
+        localStorage.removeItem("lastQuery");
+    }
 } catch {}
 
 //Small helpers (rendering stubs)
@@ -48,24 +54,23 @@ form.addEventListener("submit", async (e) => {
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const q = (input.value || "").trim(); //Input is trimmed, leading/trailing spaces are removed. (" New York,US " => "New York,US")
-        const normalized = q
+        //Input is trimmed, leading/trailing spaces are removed. (" New York,US " => "New York,US")
+        const raw = (input.value || "").trim(); 
+        const normalized = raw
             .replace(/\s*,\s*/g, ",") //Removes spaces around commas ("New York , US" => "New York,US")
             .replace(/\s+/g, " "); //Removes unnecessary spaces ("New  York,US" => "New York,US")
 
-        if (normalized !== q) input.value = normalized; //If the normalized value is different from the original, update the input.
-       
-   
-        console.log("[submit] q =", q);
+        if (normalized !== raw) input.value = normalized; //If the normalized value is different from the original, update the input.
 
-        if (!q) {
+        const query = normalized;
+        if (!query) {
             setStatus("Please enter a city (e.g., London or London,UK)");
             return;
         }
 
         try {
             showLoading("Searching...");
-            const place = await fetchCoords(q);
+            const place = await fetchCoords(query);
             console.log("[geocode] place =", place);
             setStatus(
                 `Found ${place.name}${place.state ? ", " + place.state : ""}, ${place.country}. Fetching weather…`
@@ -76,7 +81,7 @@ form.addEventListener("submit", async (e) => {
             console.log("[weather] data =", weather);
             setStatus("Weather data fetched. Rendering…");
             renderWeatherCard(place, weather);
-            try { localStorage.setItem("lastQuery", q); } catch {}
+            try { localStorage.setItem("lastQuery", query); } catch {}
         } 
         catch (err) {
             console.error("[error] ", err);
@@ -84,8 +89,8 @@ form.addEventListener("submit", async (e) => {
         }
     });
 
-    async function fetchCoords(q) {
-        const url = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(q)}&limit=1&appid=${OWM_API_KEY}`;
+    async function fetchCoords(query) {
+        const url = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(query)}&limit=1&appid=${OWM_API_KEY}`;
         const resp = await fetch(url, { method: "GET" });
 
         if (!resp.ok) throw new Error(`Geocoding failed: ${resp.statusText}`);
@@ -130,7 +135,7 @@ form.addEventListener("submit", async (e) => {
                     <p>${weather.desc}</p>
                 </header>
                 <div class="row">
-                    <div class="tempt">
+                    <div class="temp">
                         <div class="big">${weather.tempC}&deg;C</div>
                         ${iconURL ? `<img src="${iconURL}" alt="Icon: ${weather.desc}" />` : ""}
                         </div>

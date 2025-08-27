@@ -1,1 +1,1 @@
-const OWM_API_KEY = '952114d90c279650da2ad6d96ad9e60f';
+const OWM_API_KEY = 'YOUR_API_KEY';
